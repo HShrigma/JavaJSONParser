@@ -1,5 +1,38 @@
 public class Main{
-    public static void main(String[] args) {
-        System.out.println("Initializied main correctly");
+    public static void main(String[] args) {        
+        //test out individual parsing
+        String squareBrackets = "[SampleSquareBracketData]";
+        String parsed = GetSquareBracketData(squareBrackets);
+        System.err.println("bracket data: " + squareBrackets);
+        System.err.println("parsed: " + parsed);
+        System.err.println();
+        String curlyBrackets = "{SampleCurlyBracketData}";
+        parsed = GetCurlyBracketData(curlyBrackets);
+        System.err.println("bracket data: " + curlyBrackets);
+        System.err.println("parsed: " + parsed);
+        System.err.println();
+        String quotes = "\"SampleQuotesData\""; 
+        String numLiteral = "98";
+        String boolLiteral = "true";
+
+    }
+
+    public static String GetSquareBracketData(String input){
+        StringBuilder rStringBuilder = new StringBuilder();
+        
+        for (int i = 0; i < input.length(); i++) {
+            if(input.charAt(i) != '[' && input.charAt(i) != ']' ) 
+                rStringBuilder.append(input.charAt(i));
+        }
+        return rStringBuilder.toString();
+    }
+    public static String GetCurlyBracketData(String input){
+        StringBuilder rStringBuilder = new StringBuilder();
+        
+        for (int i = 0; i < input.length(); i++) {
+            if(input.charAt(i) != '{' && input.charAt(i) != '}' ) 
+                rStringBuilder.append(input.charAt(i));
+        }
+        return rStringBuilder.toString();
     }
 }
