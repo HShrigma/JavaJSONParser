@@ -49,7 +49,7 @@ public class Main {
     }
 
     public static boolean IsStringBool(String inpuString) {
-        return (inpuString == "true" || inpuString == "false");
+        return (inpuString.equals("true")  || inpuString.equals("false"));
     }
 
     public static boolean StringToBool(String inpuString) {
