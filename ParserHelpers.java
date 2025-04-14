@@ -80,4 +80,12 @@ public class ParserHelpers {
         System.err.println("JSONDataType: Type Error. Cannot get type for input: " + input);
         return null;
     }
+
+    public static boolean IsCollection(String input) {
+        return GetDataType(input) == JSONDataType.ARRAY || GetDataType(input) == JSONDataType.OBJECT;
+    }
+
+    public static boolean isNested(String collection){
+            return collection.substring(1).contains("[") || collection.substring(1).contains("{");
+    }
 }
