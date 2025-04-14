@@ -28,6 +28,11 @@ public class Main {
             System.out.println("parsed: " + StringToBool(boolLiteral));
             System.out.println();
         }
+        String nullString = "null";
+        System.out.println("Sample Null String Check for: " + nullString);
+        if(IsStringNull(nullString)){
+            System.out.println("String is null");
+        }
     }
 
     public static String GetSquareBracketData(String input) {
@@ -62,5 +67,9 @@ public class Main {
                 System.err.println("StringToBool: Error for inpuString\nNo Such boolean value: " + inpuString);
                 return false;
         }
+    }
+
+    public static boolean IsStringNull(String input){
+        return input.equals("null");
     }
 }
