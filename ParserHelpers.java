@@ -1,3 +1,9 @@
+import java.util.ArrayList;
+// import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ParserHelpers {
 
     public static String GetSquareBracketData(String input) {
@@ -85,7 +91,135 @@ public class ParserHelpers {
         return GetDataType(input) == JSONDataType.ARRAY || GetDataType(input) == JSONDataType.OBJECT;
     }
 
-    public static boolean isNested(String collection){
-            return collection.substring(1).contains("[") || collection.substring(1).contains("{");
+    public static boolean isNested(String collection) {
+        return collection.substring(1).contains("[") || collection.substring(1).contains("{");
+    }
+
+    public static JSONNode BuildJSONNode(String input) {
+        switch (GetDataType(input)) {
+            case DOUBLE:
+                return BuildJSONDouble(input);
+            case INT:
+                return BuildJSONInt(input);
+            case STRING:
+                return BuildJSONtring(input);
+            case BOOL:
+                return BuildJSONBool(input);
+            case NULL:
+                return BuildJsonNull();
+            case ARRAY:
+                return BuildJSONArray(input);
+            case OBJECT:
+                return BuildJsonObject(input);
+            default:
+                System.err.println("BuildJSONNode: ERROR - No such type " + GetDataType(input));
+                return null;
+        }
+    }
+
+    public static JSONBoolean BuildJSONBool(String input) {
+        return new JSONBoolean(StringToBool(input));
+    }
+
+    public static JSONInt BuildJSONInt(String input) {
+        return new JSONInt(Integer.parseInt(input));
+    }
+
+    public static JSONDouble BuildJSONDouble(String input) {
+        return new JSONDouble(Double.parseDouble(input));
+    }
+
+    public static JSONString BuildJSONtring(String input) {
+        return new JSONString(input.replaceAll("\"", ""));
+    }
+
+    public static JSONNull BuildJsonNull() {
+        return new JSONNull();
+    }
+
+    public static JSONObject BuildJsonObject(String input) {
+        input = input.trim();
+        if (input.startsWith("{") && input.endsWith("}")) {
+            input = input.substring(1, input.length() - 1); // strip braces
+        } else {
+            System.err.println("Invalid object input: " + input);
+            return null;
+        }
+    
+        Map<String, JSONNode> map = new HashMap<>();
+        List<String> pairs = SplitTopLevelElements(input);
+    
+        for (String pair : pairs) {
+            int colonIndex = pair.indexOf(':');
+            if (colonIndex == -1) {
+                System.err.println("Malformed key-value pair: " + pair);
+                continue;
+            }
+    
+            String key = pair.substring(0, colonIndex).trim().replaceAll("^\"|\"$", "");
+            String value = pair.substring(colonIndex + 1).trim();
+    
+            map.put(key, BuildJSONNode(value));
+        }
+    
+        return new JSONObject(map);
+    }
+    
+
+    public static JSONArray BuildJSONArray(String input) {
+        String data = input.trim();
+        if (data.startsWith("[") && data.endsWith("]")) {
+            data = data.substring(1, data.length() - 1); // strip brackets
+        } else {
+            System.err.println("Invalid array input: " + input);
+            return null;
+        }
+
+        ArrayList<JSONNode> jList = new ArrayList<>();
+        List<String> elements = SplitTopLevelElements(data);
+
+        for (String item : elements) {
+            jList.add(BuildJSONNode(item));
+        }
+
+        return new JSONArray(jList);
+    }
+
+    public static List<String> SplitTopLevelElements(String input) {
+        List<String> result = new ArrayList<>();
+        StringBuilder current = new StringBuilder();
+        int bracketDepth = 0;
+        int braceDepth = 0;
+        boolean inQuotes = false;
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+
+            if (c == '\"') {
+                inQuotes = !inQuotes; // toggle quote state
+            } else if (!inQuotes) {
+                if (c == '{')
+                    braceDepth++;
+                else if (c == '}')
+                    braceDepth--;
+                else if (c == '[')
+                    bracketDepth++;
+                else if (c == ']')
+                    bracketDepth--;
+            }
+
+            if (c == ',' && !inQuotes && bracketDepth == 0 && braceDepth == 0) {
+                result.add(current.toString().trim());
+                current.setLength(0);
+            } else {
+                current.append(c);
+            }
+        }
+
+        if (current.length() > 0) {
+            result.add(current.toString().trim());
+        }
+
+        return result;
     }
 }
