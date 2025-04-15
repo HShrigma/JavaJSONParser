@@ -3,7 +3,8 @@
 A from-scratch JSON parser built with pure Java. Mostly a learning project.
 
 ## 🚀 Features
-- Full JSON spec compliance (RFC 8259)
+
+- Full JSON reading capability
 - Zero dependencies
 - File I/O support
 - Clean object model
@@ -11,6 +12,7 @@ A from-scratch JSON parser built with pure Java. Mostly a learning project.
 - Human-readable output
 
 ## 📦 Installation
+
 ```bash
 # Clone the repository
 git clone https://github.com/HShrigma/JavaJSONParser.git
@@ -20,6 +22,7 @@ cd java-json-parser
 gradle build
 ```
 ## 💻 Basic Usage
+
 ```java
 // Parse from string
 String json = "{\"name\":\"Alice\",\"age\":30,\"active\":true}";
@@ -29,6 +32,7 @@ JSONNode node = JSONParser.BuildNode(json);
 String name = node.AsObject().get("name").AsString(); // "Alice"
 ```
 ## 📂 File Operations
+
 ```java
 // Read JSON file
 JSONNode config = JSONFileIO.parseFromFile("input.json");
@@ -37,6 +41,7 @@ JSONNode config = JSONFileIO.parseFromFile("input.json");
 JSONFileIO.writeToFile("output.json", config);
 ```
 ## 🧠 Smart Parsing
+
 Handles all JSON types:
 
 ```json
@@ -50,3 +55,10 @@ Handles all JSON types:
   "object": {"nested": "value"}
 }
 ```
+## 📜 License
+
+MIT License - free for any use! *(Go crazy)*
+
+##
+
+Crafted with care by ***HShrigma***
