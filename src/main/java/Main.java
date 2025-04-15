@@ -1,53 +1,25 @@
-import src.main.java.model.JSONNode;
-import src.main.java.parser.JSONParser;
+import src.main.java.parser.JSONFileIO;
+
+import src.main.java.model.*;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        StressTest();
-    }
-
-    public static void StressTest() {
-        String complexInput = "{"
-            + "\"users\": ["
-                + "{\"name\": \"Alice\", \"age\": 30},"
-                + "{\"name\": \"Bob\", \"hobbies\": [\"chess\", {\"type\": \"strategy\", \"difficulty\": \"high\"}]},"
-                + "true,"
-                + "null,"
-                + "42.5"
-            + "],"
-            + "\"metadata\": {"
-                + "\"count\": 2,"
-                + "\"active\": true,"
-                + "\"nested\": {"
-                    + "\"deep\": {"
-                        + "\"deeper\": {"
-                            + "\"deepest\": \"🥽\""
-                        + "}"
-                    + "}"
-                + "}"
-            + "}"
-        + "}";
-    
-        // Test with a complex input
-        JSONNode node = JSONParser.BuildNodeDebug(complexInput);
-        if (node != null) {
-            System.out.println(node);
-        } else {
-            System.out.println("Failed to parse complex input.");
-        }
-    
-        // Test with malformed input
-        String malformedInput = "{\n" + 
-                                "  \"name\": \"Alice,\n" + 
-                                "  \"age\": 30\n" + 
-                                "}\n" + 
-                                "";
-        node = JSONParser.BuildNodeDebug(malformedInput);
-        if (node != null) {
-            System.out.println(node);
-        } else {
-            System.out.println("Failed to parse malformed input.");
+        try {
+            // Read from file
+            JSONNode test = JSONFileIO.parseFromFile("test.json");
+            System.out.println("Parsed test: " + test);
+            
+            // Modify and write back
+            test.AsObject().put("lastModified", new JSONString(java.time.LocalDateTime.now().toString()));
+            JSONFileIO.writeToFile("test_updated.json", test);
+            
+            System.out.println("Updated config written to file!");
+            
+        } catch (IOException e) {
+            System.err.println("File error: " + e.getMessage());
         }
     }
-    
 }

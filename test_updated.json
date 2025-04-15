@@ -1,0 +1,1 @@
+{"tests": [{"input": "{}", "expected": "object"}, {"input": "[]", "expected": "array"}], "stats": {"accuracy": 100, "speed": 99.9}, "name": "Awesome Parser", "lastModified": "2025-04-15T17:06:25.736659542"}
