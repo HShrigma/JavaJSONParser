@@ -13,7 +13,7 @@ A from-scratch JSON parser built with pure Java - perfect for learning or lightw
 ## 📦 Installation
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/java-json-parser.git
+git clone https://github.com/HShrigma/java-json-parser.git
 cd java-json-parser
 
 # Build with Gradle
