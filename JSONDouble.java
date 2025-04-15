@@ -7,4 +7,8 @@ public class JSONDouble extends JSONNode{
     
     @Override
     public double AsDouble() {return value;}
+    @Override
+    public String toString(){
+        return Double.toString(value);
+    }
 }

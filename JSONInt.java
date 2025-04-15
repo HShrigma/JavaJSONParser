@@ -8,4 +8,8 @@ public class JSONInt extends JSONNode {
 
     @Override
     public int AsInteger() {return value;}
+    @Override
+    public String toString(){
+        return Integer.toString(value);
+    }
 }

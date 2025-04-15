@@ -5,7 +5,14 @@ public class JSONString extends JSONNode {
         value = input;
         type = ParserHelpers.JSONDataType.STRING;
     }
-    
+
     @Override
-    public String AsString(){ return value;}
+    public String AsString() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return '\"' + value + '\"';
+    }
 }

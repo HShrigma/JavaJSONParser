@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Map;
+
 public abstract class JSONNode {
     // get data type
     ParserHelpers.JSONDataType type;
@@ -25,4 +28,20 @@ public abstract class JSONNode {
         System.err.println("Not Integer! Data type is: " + type);
         return 0;
     }
+
+    public List<JSONNode> AsArray() {
+        System.err.println("Not Array! Data type is: " + type);
+        return null;
+    }
+
+    public Map<String, JSONNode> AsObject() {
+        System.err.println("Not Object! Data type is: " + type);
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "[JSONNode type=" + type + "]";
+    }
+
 }

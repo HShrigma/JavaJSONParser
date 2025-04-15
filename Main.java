@@ -1,42 +1,41 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
         // test out base JSONNode Object
         JSONNode node = new JSONBoolean(true);
-        boolean valueBool = node.AsBool();
-        System.out.println("Value as bool: " + valueBool);
-        // should return type error
-        String valueStr = node.AsString();
-        if (valueStr == null) {
-            System.out.println("(BOOL NODE) String value is null (expected)");
-        }
+        System.out.println(node);
 
         node = new JSONInt(25);
-        int valueInteger = node.AsInteger();
-        System.out.println("Value as int: " + valueInteger);
-
-        valueStr = node.AsString();
-        if (valueStr == null) {
-            System.out.println("(INT NODE) String value is null (expected)");
-        }
+        System.out.println(node);
 
         node = new JSONDouble(3.14);
-        double valueDouble = node.AsInteger();
-        System.out.println("Value as double: " + valueDouble);
-
-        valueStr = node.AsString();
-        if (valueStr == null) {
-            System.out.println("(DOUBLE NODE) String value is null (expected)");
-        }
+        System.out.println(node);
 
         node = new JSONString("This is a string");
+        System.out.println(node);
 
-        valueStr = node.AsString();
-        if (valueStr == null) {
-            System.err.println("(STRING NODE) String value is null (NOT expected)");
-        } else {
-            System.out.println("Value as string: " + valueStr);
-        }
         
+        List<JSONNode> valueList = new ArrayList<JSONNode>();
+        valueList.add(new JSONBoolean(false));
+        valueList.add(new JSONInt(2));
+        valueList.add(new JSONDouble(5.23));
+        valueList.add(new JSONString("Words words WORDS"));
+
+        node = new JSONArray(valueList);
+        System.out.println(node);
+
+        Map<String, JSONNode> map = new HashMap<String, JSONNode>();
+        map.put("Double", new JSONDouble(3.14 ));
+        map.put("Bool", new JSONBoolean(true));
+        map.put("String", new JSONString("Words"));
+        map.put("Int", new JSONInt(23456));
+        map.put("Null", new JSONNull());
+
+        node = new JSONObject(map);
+        System.out.println(node);
     }
 }
