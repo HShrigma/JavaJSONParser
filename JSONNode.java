@@ -41,7 +41,9 @@ public abstract class JSONNode {
 
     @Override
     public String toString() {
-        return "[JSONNode type=" + type + "]";
+        if(type != null)
+            return "[JSONNode type=" + type + "]";
+        return null;
     }
 
 }
